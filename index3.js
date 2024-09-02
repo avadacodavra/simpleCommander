@@ -7,16 +7,25 @@ const tasksFile = path.join(__dirname, 'tasks.json');
 
 // Helper function to load tasks from the JSON file
 function loadTasks() {
+    try{
   if (fs.existsSync(tasksFile)) {
-    const tasksData = fs.readFileSync(tasksFile, 'utf8');
-    return JSON.parse(tasksData);
+    const tasksData = fs.readFileSync(tasksFile, 'utf8'); //reads file content synchronously
+    return JSON.parse(tasksData); //parses JSon string to JS object and will return json of array of objects
   }
-  return [];
+    }catch(error){
+        console.log("Error reading todo file:", error);
+    }
+    return [];
 }
 
 // Helper function to save tasks to the JSON file
 function saveTasks(tasks) {
+    try{
   fs.writeFileSync(tasksFile, JSON.stringify(tasks, null, 2), 'utf8');
+    }
+    catch (error){
+        console.log("Error saving todo file: ", error);
+    }
 }
 
 program
